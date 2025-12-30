@@ -269,6 +269,11 @@ scholar:
   last_name: [Einstein]
   first_name: [Albert, A.]
 
+  sort_by: year
+  order: descending
+  group_by: year
+  group_order: descending
+  
   style: apa
   locale: en
 
