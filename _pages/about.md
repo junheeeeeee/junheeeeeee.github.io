@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: Ph.D. candidate, Department of Artificial Intelligence, <a href='https://bce.korea.ac.kr/bce/index.do'>Korea University</a>.
+subtitle: Ph.D. candidate, Department of Artificial Intelligence, <a href='http://xai.korea.ac.kr/'>Korea University</a>.
 
 profile:
   align: right
