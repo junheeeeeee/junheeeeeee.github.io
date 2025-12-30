@@ -6,7 +6,7 @@ subtitle: Ph.D. candidate, Department of Artificial Intelligence, <a href='http:
 
 profile:
   align: right
-  image: prof_pic.jpg
+  image: 준희_증명.jpg
   image_circular: false # crops the image to make it circular
   address: >
 
