@@ -5,5 +5,5 @@ inline: true
 related_posts: false
 ---
 
-2 papers are accepted to NeurIPS 2024.
+1 papers are accepted to NeurIPS 2024.
 
