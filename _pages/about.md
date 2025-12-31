@@ -15,7 +15,7 @@ selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true  # includes social icons at the bottom of the page
 ---
 
-I am a graduated student pursuing a Ph.D. degree in Artificial Intelligence at Korea University, South Korea, and a member of [Pattern Recognition & Machine Learning Lab](http://pr.korea.ac.kr/) advised by Prof. Seong-Whan, Lee.  
+I am a graduate student pursuing a Ph.D. degree in Artificial Intelligence at Korea University, South Korea, and a member of [Pattern Recognition & Machine Learning Lab](http://pr.korea.ac.kr/) advised by Prof. Seong-Whan, Lee.  
 For more details, please see my [CV](assets/pdf/cv.pdf).
 
 ### Research Interests
