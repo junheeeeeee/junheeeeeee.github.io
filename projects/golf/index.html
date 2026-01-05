@@ -12,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>AI-Based Golf Swing Analysis for Training | Jun-Hee  Kim</title>
     <meta name="author" content="Jun-Hee  Kim">
-    <meta name="description" content="Keypoint estimation and swing event detection from golf swing videos (industry–academia collaboration).">
+    <meta name="description" content="Keypoint estimation, swing event detection, and multi-view 3D pose estimation from golf swing videos (industry–academia collaboration).">
     <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website">
 
 
@@ -108,173 +108,117 @@
 
           <header class="post-header">
             <h1 class="post-title">AI-Based Golf Swing Analysis for Training</h1>
-            <p class="post-description">Keypoint estimation and swing event detection from golf swing videos (industry–academia collaboration).</p>
+            <p class="post-description">Keypoint estimation, swing event detection, and multi-view 3D pose estimation from golf swing videos (industry–academia collaboration).</p>
           </header>
 
           <article>
             <h2 id="summary">Summary</h2>
-<p>This project developed an AI-based golf swing analysis pipeline for training applications. The system estimates <strong>2D human keypoints (and clubhead-related cues)</strong> from swing videos and detects <strong>major swing events</strong> by predicting the frame index of each phase in a swing sequence. The deliverables were implemented as deployable software components and accompanied by an annotated dataset. :contentReference[oaicite:1]{index=1}</p>
-
-<!-- TODO: Insert an overview figure of the pipeline -->
+<p>This project develops an AI-based golf swing analysis pipeline for training applications. The system estimates pose/keypoints from swing videos, detects major swing events by predicting the frame index of each phase, and reconstructs 3D pose from synchronized multi-view footage (front/side) using camera geometry and multi-view learning. The outcome is a deployable analysis stack designed for scalable coaching and content understanding.</p>
 
 <h2 id="motivation">Motivation</h2>
-<p>Golf training platforms rely on consistent, frame-accurate analysis of swing mechanics. Manual annotation of swing phases and joint trajectories is time-consuming and difficult to scale. This work aimed to provide a robust, automatic pipeline that supports downstream feedback such as posture assessment, timing diagnostics, and event-based coaching.</p>
+<p>Golf training platforms require consistent, frame-accurate analysis of swing mechanics. Manual labeling of swing phases and posture trajectories is expensive and difficult to scale across players, environments, and camera setups. This work targets reliable automation to support downstream feedback such as posture assessment, timing diagnostics, and event-based coaching.</p>
 
 <h2 id="objectives">Objectives</h2>
-<ol>
+<ul>
   <li>
-<strong>Pose / keypoint estimation from swing videos</strong>
-    <ul>
-      <li>Estimate 2D joint keypoints across frames and return coordinate metadata per frame.</li>
-      <li>Extend standard pose estimation to better handle golf-specific factors (e.g., club motion, blur, and small fast-moving parts). :contentReference[oaicite:2]{index=2}</li>
-    </ul>
-  </li>
+<strong>Pose / keypoint estimation</strong> from swing videos for stable per-frame motion understanding.</li>
   <li>
-<strong>Swing event (sequence) frame estimation</strong>
-    <ul>
-      <li>Detect the frame index of eight key swing events:
-<strong>Address, Takeaway, Backswing, Top, Downswing, Impact, Follow-through, Finish</strong>. :contentReference[oaicite:3]{index=3}</li>
-    </ul>
-  </li>
+<strong>Swing event (sequence) frame estimation</strong> for the eight key phases:
+Address, Takeaway, Backswing, Top, Downswing, Impact, Follow-through, Finish.</li>
   <li>
-<strong>Dataset construction and annotation</strong>
-    <ul>
-      <li>Build an annotation workflow and produce labeled data supporting pose estimation and swing event modeling. :contentReference[oaicite:4]{index=4}</li>
-    </ul>
-  </li>
-</ol>
+<strong>Multi-view 3D pose estimation</strong> from synchronized front/side videos using camera geometry and multi-view learning.</li>
+  <li>
+<strong>Dataset construction and annotation workflow</strong> to support training and evaluation.</li>
+</ul>
 
 <h2 id="method">Method</h2>
 
-<h3 id="1-pose--keypoint-estimation">1) Pose / Keypoint Estimation</h3>
-<p>We started from a high-resolution pose estimation baseline and introduced adaptations to improve stability and precision in golf swing footage.</p>
+<h3 id="1-2d-pose--keypoint-estimation">1) 2D Pose / Keypoint Estimation</h3>
+<p>We build a high-resolution pose estimation pipeline suitable for golf swing footage where motion blur and fast limb/club motion are common.</p>
 
 <ul>
-  <li>
-<strong>Baseline</strong>
-    <ul>
-      <li>A high-resolution representation approach (HRNet-style) that preserves fine spatial detail.</li>
-      <li>Limitation: standard person-centric pipelines may not directly model golf-specific cues such as the clubhead.</li>
-    </ul>
-  </li>
-  <li>
-<strong>Proposed pose network</strong>
-    <ul>
-      <li>A scalable feature-aggregation architecture designed to reduce quantization errors and enable flexible model scaling.</li>
-      <li>Multi-stage supervision using intermediate heatmap predictions (weighted training across blocks) for stable convergence.</li>
-    </ul>
-  </li>
-  <li>
-<strong>Refinement for keypoint precision</strong>
-    <ul>
-      <li>An additional refinement module predicts a 2D offset vector to correct pixel-level errors from heatmap argmax selection.</li>
-      <li>This helps reduce visible jitter and discretization artifacts in video outputs. :contentReference[oaicite:5]{index=5}</li>
-    </ul>
-  </li>
-  <li>
-<strong>Training augmentations (golf-specific)</strong>
-    <ul>
-      <li>Heatmap augmentation along the club region to guide learning under blur and thin-structure conditions.</li>
-      <li>Blur augmentation applied to the club region to improve robustness to motion blur. :contentReference[oaicite:6]{index=6}</li>
-    </ul>
-  </li>
+  <li>Start from a high-resolution, heatmap-based pose formulation.</li>
+  <li>Add refinement to reduce pixel quantization and improve temporal stability (less jitter across frames).</li>
+  <li>Apply golf-specific robustness strategies (e.g., blur-aware training and thin-structure handling where applicable).</li>
 </ul>
-
-<!-- TODO: Insert a figure comparing baseline vs. refined pose outputs -->
 
 <h3 id="2-swing-event-sequence-frame-estimation">2) Swing Event (Sequence) Frame Estimation</h3>
-<p>Swing event detection was formulated as a temporal modeling problem: estimate the probability of each event per frame and select the highest-confidence frame for each event.</p>
+<p>Swing event detection is formulated as a temporal modeling problem: estimate per-event probability per frame and select the peak frame for each event.</p>
 
 <ul>
-  <li>
-<strong>Baseline</strong>
-    <ul>
-      <li>A SwingNet-style model (LSTM-based) using frame-level visual features.</li>
-      <li>Limitation: relying on global image features can be sensitive to background and may provide weak evidence for specific swing events.</li>
-    </ul>
-  </li>
-  <li>
-<strong>Pose-guided event detection (proposed)</strong>
-    <ul>
-      <li>Inject pose guidance by concatenating <strong>pose heatmaps</strong> with frame-level image features.</li>
-      <li>Use a residual approach to retain useful frame information while integrating pose cues.</li>
-      <li>Feed the fused representation into an LSTM to learn temporal dynamics and produce per-event probabilities per frame. :contentReference[oaicite:7]{index=7}</li>
-    </ul>
-  </li>
+  <li>Use sequential modeling to capture swing dynamics over time (frame-to-frame dependencies).</li>
+  <li>Incorporate pose-derived cues to improve event discrimination (pose-guided temporal features).</li>
+  <li>Output a consistent event timeline aligned with the eight swing phases.</li>
 </ul>
 
-<!-- TODO: Insert a figure illustrating event timeline and predicted event frames -->
-
-<h3 id="3-dataset--annotation-pipeline">3) Dataset &amp; Annotation Pipeline</h3>
-<p>A dedicated annotation workflow was designed to support both pose estimation and swing event modeling at scale.</p>
+<h3 id="3-multi-view-3d-pose-estimation-frontside">3) Multi-View 3D Pose Estimation (Front/Side)</h3>
+<p>We extend analysis beyond 2D by reconstructing 3D pose from synchronized multi-view videos.</p>
 
 <ul>
-  <li>Video selection and preprocessing (front/side views), frame extraction, and rotation normalization for labeling efficiency.</li>
-  <li>Swing event frame selection: scan long sequences to identify the eight events across videos.</li>
-  <li>Dense annotations on selected frames, including <strong>bounding boxes, segmentation, and pose keypoints</strong>, coordinated by a team-based process. :contentReference[oaicite:8]{index=8}</li>
+  <li>
+<strong>Camera geometry</strong>: leverage calibrated or estimated camera parameters to enforce geometric consistency across views.</li>
+  <li>
+<strong>Multi-view learning</strong>: learn a representation that fuses front/side observations while maintaining cross-view agreement.</li>
+  <li>Produce 3D joint trajectories suitable for downstream coaching signals (e.g., swing plane consistency, joint angle dynamics).</li>
 </ul>
 
 <h2 id="data">Data</h2>
-<p>The project used a proprietary/partner dataset containing both <strong>frame-level pose supervision</strong> and <strong>video-level swing sequences</strong> (front and side views). The dataset was split into training/testing sets for both pose estimation and event detection tasks, and it was expanded through annotation and curation workflows described above. :contentReference[oaicite:9]{index=9}</p>
+<p>We built and curated datasets to support training and evaluation across the full pipeline:</p>
 
-<h2 id="results">Results</h2>
-<p>We evaluated two core capabilities:</p>
-
-<ol>
+<ul>
   <li>
-<strong>Pose estimation quality</strong>
-    <ul>
-      <li>Metric: <strong>PCKh@0.5</strong> (Percentage of Correct Keypoints, head-normalized).</li>
-      <li>The final models achieved performance above the target threshold, and refinement improved stability/accuracy. :contentReference[oaicite:10]{index=10}</li>
-    </ul>
-  </li>
+<strong>2D pose/keypoint supervision (frame-level)</strong> for learning stable joint trajectories in swing videos.</li>
   <li>
-<strong>Swing event frame detection</strong>
-    <ul>
-      <li>Metric: <strong>PCE</strong> (Percentage of Correct Events) over the eight swing events.</li>
-      <li>The pose-guided approach improved event detection compared to the baseline and exceeded the target performance level. :contentReference[oaicite:11]{index=11}</li>
-    </ul>
-  </li>
-</ol>
+<strong>Swing event labels (video-level)</strong> with frame indices for the eight swing phases:
+Address, Takeaway, Backswing, Top, Downswing, Impact, Follow-through, Finish.</li>
+  <li>
+<strong>Synchronized multi-view samples (front/side)</strong> to enable multi-view 3D pose reconstruction.</li>
+</ul>
 
-<!-- TODO: Insert your quantitative table/plots (PCKh/PCE) here -->
-<!-- TODO: Insert qualitative examples (pose overlays, event timelines) here -->
+<p>We also supported the end-to-end annotation workflow (data selection, labeling guidelines, QA, and iteration with stakeholders) to ensure consistent labeling quality at scale.</p>
+
+<h2 id="evaluation-confidential">Evaluation (Confidential)</h2>
+<p>Detailed quantitative results and internal benchmarks are not publicly shareable due to confidentiality constraints.<br>
+Results can be shared upon request under an NDA.</p>
 
 <h2 id="deliverables">Deliverables</h2>
 <ul>
-  <li>Source code for:
+  <li>Deployable modules for:
     <ul>
-      <li>Pose / keypoint estimation module (deployable)</li>
-      <li>Swing event frame estimation module (deployable)</li>
+      <li>2D pose / keypoint estimation</li>
+      <li>Swing event frame estimation</li>
+      <li>Multi-view 3D pose estimation (front/side)</li>
     </ul>
   </li>
-  <li>Completed annotated dataset supporting pose, detection, and sequencing tasks. :contentReference[oaicite:12]{index=12}</li>
+  <li>An annotated dataset and labeling guideline/workflow supporting the above tasks.</li>
 </ul>
 
-<h2 id="my-role-edit-as-needed">My Role (edit as needed)</h2>
+<h2 id="my-role">My Role</h2>
 <ul>
-  <li>Designed and implemented the overall pipeline for swing video analysis.</li>
-  <li>Developed and/or trained the pose estimation model and refinement strategy.</li>
-  <li>Built the pose-guided swing event detection model and evaluation pipeline.</li>
-  <li>Led dataset curation and supported the annotation workflow with stakeholders.</li>
+  <li>Designed the end-to-end pipeline and integration strategy for golf swing video analysis.</li>
+  <li>Developed the 2D pose/keypoint estimation component and improved temporal stability for video inputs.</li>
+  <li>Implemented multi-view 3D pose estimation from synchronized front/side videos using camera geometry and multi-view learning.</li>
+  <li>Led and supported dataset construction and labeling for:
+    <ul>
+      <li><strong>2D pose/keypoint supervision (frame-level)</strong></li>
+      <li><strong>Swing event labels (video-level frame indices for the eight phases)</strong></li>
+      <li><strong>Synchronized multi-view samples (front/side) for 3D reconstruction</strong></li>
+    </ul>
+  </li>
+  <li>Worked closely with stakeholders to define data requirements, labeling guidelines, and quality-control processes.</li>
 </ul>
 
-<h2 id="tech-stack-high-level">Tech Stack (high-level)</h2>
+<h2 id="tech-stack">Tech Stack</h2>
 <ul>
-  <li>Deep learning–based 2D pose estimation (heatmap + refinement)</li>
-  <li>Temporal event modeling (pose-guided features + LSTM)</li>
-  <li>Dataset curation and large-scale annotation workflow</li>
+  <li>Heatmap-based 2D pose estimation + refinement</li>
+  <li>Temporal sequence modeling for event detection</li>
+  <li>Multi-view 3D pose reconstruction (geometry + multi-view learning)</li>
+  <li>Dataset curation and annotation workflow</li>
   <li>Deployment-oriented implementation (software deliverables)</li>
 </ul>
 
-<h2 id="future-work">Future Work</h2>
-<ul>
-  <li>
-<strong>3D pose estimation from multi-view (front/side) videos</strong> using camera geometry and multi-view learning.</li>
-  <li>
-<strong>Real-time ball motion analysis</strong> for putting and trajectory-based feedback.</li>
-  <li>Robust real-world deployment improvements (latency, stability under motion blur, and domain shift). :contentReference[oaicite:13]{index=13}</li>
-</ul>
+<hr>
+
 
           </article>
 
