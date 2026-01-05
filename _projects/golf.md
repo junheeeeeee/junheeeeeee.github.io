@@ -2,7 +2,7 @@
 layout: page
 title: AI-Based Golf Swing Analysis for Training
 description: Keypoint estimation, swing event detection, and multi-view 3D pose estimation from golf swing videos (industry–academia collaboration).
-importance: 1
+importance: 2
 category: work
 ---
 
