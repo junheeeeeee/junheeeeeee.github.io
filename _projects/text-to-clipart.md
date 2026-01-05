@@ -2,6 +2,7 @@
 layout: page
 title: Text-to-ClipArt Video Generation System
 description: From Korean educational text to ClipArt-style images and pose-driven character animations (industry–academia collaboration).
+img: /assets/img//text-to-clipart/penguin2.gif
 importance: 1
 category: work
 ---
