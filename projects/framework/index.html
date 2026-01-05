@@ -10,9 +10,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Projects | Jun-Hee  Kim</title>
+    <title>3D Human Pose Estimation on DTrain (KONAN Deep Learning Framework) | Jun-Hee  Kim</title>
     <meta name="author" content="Jun-Hee  Kim">
-    <meta name="description" content="Selected research and industry projects.">
+    <meta name="description" content="Feasibility study and prototype design for implementing state-of-the-art 3D pose estimation models on KONAN’s DTrain framework.">
     <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website">
 
 
@@ -33,7 +33,7 @@
     <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%F0%9F%A4%96&lt;/text&gt;&lt;/svg&gt;">
     
     <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="canonical" href="https://junheeeeeee.github.io/projects/">
+    <link rel="canonical" href="https://junheeeeeee.github.io/projects/framework/">
     
     <!-- Dark Mode -->
     
@@ -76,8 +76,8 @@
               <li class="nav-item ">
                 <a class="nav-link" href="/publications/">Publications</a>
               </li>
-              <li class="nav-item active">
-                <a class="nav-link" href="/projects/">Projects<span class="sr-only">(current)</span></a>
+              <li class="nav-item ">
+                <a class="nav-link" href="/projects/">Projects</a>
               </li>
 
               <!-- Toogle theme mode -->
@@ -107,82 +107,113 @@
         <div class="post">
 
           <header class="post-header">
-            <h1 class="post-title">Projects</h1>
-            <p class="post-description">Selected research and industry projects.</p>
+            <h1 class="post-title">3D Human Pose Estimation on DTrain (KONAN Deep Learning Framework)</h1>
+            <p class="post-description">Feasibility study and prototype design for implementing state-of-the-art 3D pose estimation models on KONAN’s DTrain framework.</p>
           </header>
 
           <article>
-            <!-- pages/projects.md -->
-<div class="projects">
-  <!-- Display categorized projects -->
-  <h2 class="category">work</h2>
-  <!-- Generate cards for each project -->
-  <div class="container">
-    <div class="row row-cols-2">
-<div class="card-item col">
-<a href="/projects/text-to-clipart/"><div class="card hoverable">
-      <div class="row g-0">
-<div class="card-img col-md-6">
-          <figure>
+            <h2 id="summary">Summary</h2>
+<p>This project evaluated the feasibility of implementing modern <strong>3D human pose estimation</strong> algorithms using <strong>KONAN’s deep learning framework (DTrain)</strong>. We surveyed representative model architectures and learning paradigms, assessed whether key components (e.g., transformer blocks) can be reproduced in DTrain, and identified framework-level limitations encountered during practical experimentation. Based on the findings, we proposed actionable solutions to improve DTrain’s support for 3D pose estimation workloads. :contentReference[oaicite:1]{index=1}</p>
 
-  <picture>
-    
-    <source class="responsive-img-srcset" media="(max-width: 480px)" srcset="/assets/img//text-to-clipart/penguin2.gif-480.webp"></source>
-    <source class="responsive-img-srcset" media="(max-width: 800px)" srcset="/assets/img//text-to-clipart/penguin2.gif-800.webp"></source>
-    <source class="responsive-img-srcset" media="(max-width: 1400px)" srcset="/assets/img//text-to-clipart/penguin2.gif-1400.webp"></source>
-    
+<h2 id="background--motivation">Background &amp; Motivation</h2>
+<p>3D human pose estimation is a core capability for motion understanding in video analytics, human–computer interaction, and sports/health applications. While PyTorch has become the de facto standard for prototyping such models, this project aimed to validate whether DTrain can serve as a competitive alternative for building and running state-of-the-art 3D pose estimation pipelines in production-oriented environments. :contentReference[oaicite:2]{index=2}</p>
 
-    <!-- Fallback to the original file -->
-    <img src="/assets/img//text-to-clipart/penguin2.gif" width="auto" height="auto" alt="project thumbnail" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+<h2 id="objectives">Objectives</h2>
+<ul>
+  <li>Analyze and summarize <strong>3D human pose estimation methodologies</strong> and representative network designs.</li>
+  <li>Identify commonly used <strong>datasets and evaluation protocols</strong> for 3D pose estimation.</li>
+  <li>Determine whether recent models can be <strong>implemented within DTrain</strong>, and if not, pinpoint blockers.</li>
+  <li>Propose <strong>framework-level improvements</strong> (engineering solutions) to close the gap. :contentReference[oaicite:3]{index=3}</li>
+</ul>
 
-  </picture>
+<h2 id="method">Method</h2>
 
-</figure>
+<h3 id="1-methodology-review-end-to-end-vs-two-stage">1) Methodology Review: End-to-End vs. Two-Stage</h3>
+<p>We organized 3D pose estimation methods into two major categories:</p>
 
-        </div>
-        <div class="col-md-6">
-<div class="card-body">
-            <h3 class="card-title text-lowercase">Text-to-ClipArt Video Generation System</h3>
-            <p class="card-text">From Korean educational text to ClipArt-style images and pose-driven character animations (industry–academia collaboration).</p>
-            <div class="row ml-1 mr-1 p-0"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </a>
-</div>
-<div class="card-item col">
-<a href="/projects/golf/"><div class="card hoverable">
-      <div class="row g-0">
-<div class="col-md-12">
-<div class="card-body">
-            <h3 class="card-title text-lowercase">AI-Based Golf Swing Analysis for Training</h3>
-            <p class="card-text">Keypoint estimation, swing event detection, and multi-view 3D pose estimation from golf swing videos (industry–academia collaboration).</p>
-            <div class="row ml-1 mr-1 p-0"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </a>
-</div>
-<div class="card-item col">
-<a href="/projects/framework/"><div class="card hoverable">
-      <div class="row g-0">
-<div class="col-md-12">
-<div class="card-body">
-            <h3 class="card-title text-lowercase">3D Human Pose Estimation on DTrain (KONAN Deep Learning Framework)</h3>
-            <p class="card-text">Feasibility study and prototype design for implementing state-of-the-art 3D pose estimation models on KONAN’s DTrain framework.</p>
-            <div class="row ml-1 mr-1 p-0"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </a>
-</div>
+<ul>
+  <li>
+<strong>End-to-End</strong>: directly infer 3D pose from RGB images/videos.
+    <ul>
+      <li>Benefit: can exploit semantic/appearance cues.</li>
+    </ul>
+  </li>
+  <li>
+<strong>Two-Stage</strong>: first estimate 2D keypoints, then lift to 3D pose.
+    <ul>
+      <li>Benefit: leverages strong 2D pose estimators and modularizes the pipeline. :contentReference[oaicite:4]{index=4}</li>
+    </ul>
+  </li>
+</ul>
 
-    </div>
-  </div>
-</div>
+<h3 id="2-dataset--benchmark-landscape">2) Dataset &amp; Benchmark Landscape</h3>
+<p>We reviewed widely used benchmarks to understand data requirements and generalization constraints:</p>
+
+<ul>
+  <li>
+<strong>Human3.6M</strong>: large-scale mocap dataset with multi-camera recordings across multiple actions.</li>
+  <li>
+<strong>MPI-INF-3DHP</strong>: indoor/outdoor scenarios commonly used to test cross-domain generalization. :contentReference[oaicite:5]{index=5}</li>
+</ul>
+
+<h3 id="3-implementation-feasibility-on-dtrain">3) Implementation Feasibility on DTrain</h3>
+<p>We assessed whether DTrain can implement key building blocks found in modern 3D pose networks.</p>
+
+<ul>
+  <li>
+<strong>Transformer-based architectures</strong>
+    <ul>
+      <li>We analyzed a transformer-based 3D pose estimation approach (e.g., video-to-3D using temporal/spatial attention) and checked DTrain’s support for core modules such as embeddings, multi-head attention, and MLP blocks.</li>
+      <li>Given DTrain’s ability to represent transformer structures (including large-model-style components), we concluded that transformer-centric 3D pose networks are largely implementable within DTrain. :contentReference[oaicite:6]{index=6}</li>
+    </ul>
+  </li>
+  <li>
+<strong>Models with non-standard train/inference graphs</strong>
+    <ul>
+      <li>Some generative or flow-based formulations require different computational flows for training vs. inference.</li>
+      <li>Instead of modifying the engine globally, we proposed an approach where users can explicitly define an inference-time computation flow and associated operations when the model is declared—enabling special-case pipelines without invasive framework changes. :contentReference[oaicite:7]{index=7}</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="key-findings">Key Findings</h2>
+<ul>
+  <li>DTrain is broadly capable of reproducing common deep learning model structures, and transformer-based 3D pose models appear feasible to implement.</li>
+  <li>However, certain <strong>system-level and tensor manipulation constraints</strong> can become critical blockers for 3D pose estimation workflows, where frequent tensor shape operations are unavoidable.</li>
+  <li>Due to environment/build and tensor-shape handling issues observed during experimentation, we were not able to complete the full standard training/evaluation protocol needed for direct, apples-to-apples performance comparisons against PyTorch. :contentReference[oaicite:8]{index=8}</li>
+</ul>
+
+<h2 id="recommendations">Recommendations</h2>
+<ul>
+  <li>Improve DTrain’s robustness for <strong>tensor shape manipulation</strong> and Linux build stability to support 3D pose pipelines end-to-end.</li>
+  <li>Provide official support for defining <strong>separate inference graphs</strong> (when required) to accommodate methods where training and inference differ.</li>
+  <li>Establish a validated 3D pose <strong>training/evaluation recipe</strong> (dataset preprocessing, metric implementation, and reproducible runs) as a reference pipeline in DTrain.</li>
+</ul>
+
+<h2 id="deliverables">Deliverables</h2>
+<ul>
+  <li>Structured survey of 3D pose estimation methodologies, datasets, and representative model architectures.</li>
+  <li>Feasibility analysis report outlining which network components are implementable in DTrain and what requires framework support.</li>
+  <li>Proposed engineering solutions for handling special-case inference flows and framework-level issues encountered during development. :contentReference[oaicite:9]{index=9}</li>
+</ul>
+
+<h2 id="my-role">My Role</h2>
+<ul>
+  <li>Researched and summarized state-of-the-art 3D human pose estimation methodologies and benchmark datasets.</li>
+  <li>Analyzed model implementation feasibility on DTrain, focusing on transformer-based components and required tensor operations.</li>
+  <li>Identified framework constraints encountered in practice and proposed concrete solutions (e.g., explicit inference-graph specification for special-case models).</li>
+  <li>Collaborated with partner engineers/stakeholders through iterative review cycles to refine requirements and improvement proposals. :contentReference[oaicite:10]{index=10}</li>
+</ul>
+
+<h2 id="tech-stack">Tech Stack</h2>
+<ul>
+  <li>DTrain (KONAN deep learning framework)</li>
+  <li>3D human pose estimation (end-to-end and two-stage paradigms)</li>
+  <li>Transformer-based temporal/spatial modeling</li>
+  <li>Dataset/benchmark analysis (Human3.6M, MPI-INF-3DHP)</li>
+</ul>
+
+<hr>
 
           </article>
 
