@@ -44,6 +44,13 @@ We constructed datasets for both image generation and animation:
   - Extended coverage to diverse occupations/actions frequently used in educational settings.
 
 ## Results (Qualitative)
+
+### Example: Generated ClipArt → pose-driven animation
+{% include figure.html path="assets/img/text-to-clipart/penguin.gif" title="Generated ClipArt animated via pose-driven motion: a penguin wearing a cone-shaped hat, jumping." class="img-fluid rounded z-depth-1" %}
+<div class="caption">
+  Generated ClipArt result animated via a pose-driven pipeline: a penguin wearing a cone-shaped hat, jumping.
+</div>
+
 The system produces:
 - ClipArt-style images aligned with Korean textual descriptions.
 - Pose-driven character animations suitable for short educational clips.
