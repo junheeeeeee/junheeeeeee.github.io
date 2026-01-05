@@ -10,9 +10,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>project 1 | Jun-Hee  Kim</title>
+    <title>Text-to-ClipArt Video Generation System | Jun-Hee  Kim</title>
     <meta name="author" content="Jun-Hee  Kim">
-    <meta name="description" content="a project with a background image">
+    <meta name="description" content="From Korean educational text to ClipArt-style images and character animations (industry–academia collaboration).">
     <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website">
 
 
@@ -33,7 +33,7 @@
     <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%F0%9F%A4%96&lt;/text&gt;&lt;/svg&gt;">
     
     <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="canonical" href="https://junheeeeeee.github.io/projects/1_project/">
+    <link rel="canonical" href="https://junheeeeeee.github.io/projects/text-to-clipart/">
     
     <!-- Dark Mode -->
     
@@ -107,169 +107,142 @@
         <div class="post">
 
           <header class="post-header">
-            <h1 class="post-title">project 1</h1>
-            <p class="post-description">a project with a background image</p>
+            <h1 class="post-title">Text-to-ClipArt Video Generation System</h1>
+            <p class="post-description">From Korean educational text to ClipArt-style images and character animations (industry–academia collaboration).</p>
           </header>
 
           <article>
-            <p>Every project has a beautiful feature showcase page.
-It’s easy to include images in a flexible 3-column grid format.
-Make your photos 1/3, 2/3, or full width.</p>
+            <h2 id="summary">Summary</h2>
+<p>We built an end-to-end system that turns <strong>Korean educational sentences</strong> into <strong>ClipArt-style visual content</strong>, and further converts generated characters into <strong>animated videos</strong> via pose estimation and animation transfer. The project targets scalable content creation for digital learning materials.</p>
 
-<p>To give your project a background in the portfolio page, just add the img tag to the front matter like so:</p>
+<h2 id="problem">Problem</h2>
+<p>Educational platforms often require a large volume of <strong>pedagogical illustrations</strong> and <strong>lightweight animations</strong> aligned with text-based curricula. Manual asset creation is expensive and does not scale well across topics, grades, and cultural contexts.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>---
-layout: page
-title: project
-description: a project with a background image
-img: /assets/img/12.jpg
----
-</code></pre></div></div>
+<h2 id="approach">Approach</h2>
+<p>The system is composed of three stages:</p>
 
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-        <figure>
+<ol>
+  <li>
+<strong>Prompt Transformation</strong>
+    <ul>
+      <li>Translate Korean inputs into English.</li>
+      <li>Normalize into a prompt format better suited for ClipArt-style generation (e.g., style tokens, constraints, and object-centric phrasing).</li>
+    </ul>
+  </li>
+  <li>
+<strong>Text-to-ClipArt Image Generation</strong>
+    <ul>
+      <li>Use a diffusion-based text-to-image model adapted for ClipArt-like outputs.</li>
+      <li>Focus on clean silhouettes, minimal texture, and classroom-friendly composition.</li>
+    </ul>
+  </li>
+  <li>
+<strong>Pose Estimation &amp; Animation Generation</strong>
+    <ul>
+      <li>Estimate character pose (single image or sequences, depending on the scenario).</li>
+      <li>Convert pose signals into animation by applying a motion/pose-driven transformation pipeline.</li>
+    </ul>
+  </li>
+</ol>
 
-  <picture>
-    
-    <source class="responsive-img-srcset" media="(max-width: 480px)" srcset="/assets/img/1-480.webp"></source>
-    <source class="responsive-img-srcset" media="(max-width: 800px)" srcset="/assets/img/1-800.webp"></source>
-    <source class="responsive-img-srcset" media="(max-width: 1400px)" srcset="/assets/img/1-1400.webp"></source>
-    
+<h2 id="data">Data</h2>
+<p>We constructed datasets for both image generation and animation:</p>
 
-    <!-- Fallback to the original file -->
-    <img src="/assets/img/1.jpg" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="example image" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+<ul>
+  <li>
+<strong>Caption dataset</strong>
+    <ul>
+      <li>Designed prompts/captions for educational semantics and ClipArt style consistency.</li>
+      <li>Included domain-specific categories commonly appearing in classroom materials.</li>
+    </ul>
+  </li>
+  <li>
+<strong>Image dataset</strong>
+    <ul>
+      <li>Curated and categorized images to support ClipArt appearance and robust filtering (e.g., usable vs. unusable).</li>
+      <li>Emphasized clean backgrounds and consistent character depiction.</li>
+    </ul>
+  </li>
+  <li>
+<strong>Pose dataset</strong>
+    <ul>
+      <li>Aggregated pose supervision from public pose datasets and synthetically generated pose samples.</li>
+      <li>Extended coverage to diverse occupations/actions frequently used in educational settings.</li>
+    </ul>
+  </li>
+</ul>
 
-  </picture>
+<h2 id="key-challenges">Key Challenges</h2>
+<ul>
+  <li>
+<strong>Safety filtering artifacts</strong>
+    <ul>
+      <li>Automated safety checkers can occasionally produce degenerate outputs (e.g., black images), requiring mitigation strategies.</li>
+    </ul>
+  </li>
+  <li>
+<strong>Out-of-distribution prompts</strong>
+    <ul>
+      <li>Rare, culturally specific, or highly compositional Korean inputs sometimes fall outside training distribution, leading to unrealistic or degraded results.</li>
+    </ul>
+  </li>
+  <li>
+<strong>Translation fidelity</strong>
+    <ul>
+      <li>Certain Korean educational/cultural terms do not map cleanly into English prompts, motivating domain-adapted translation or bilingual prompt engineering.</li>
+    </ul>
+  </li>
+  <li>
+<strong>Prompt sensitivity</strong>
+    <ul>
+      <li>Small prompt edits can cause large visual changes, demanding careful prompt normalization and template design.</li>
+    </ul>
+  </li>
+</ul>
 
-</figure>
+<h2 id="results-qualitative">Results (Qualitative)</h2>
+<p>The system produces:</p>
+<ul>
+  <li>ClipArt-style images aligned with Korean textual descriptions.</li>
+  <li>Pose-driven character animations suitable for short educational clips.</li>
+</ul>
 
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        <figure>
+<p>(You can add quantitative metrics here if you have evaluation results: preference rate, CLIP score trends, human rating, success rate by category, etc.)</p>
 
-  <picture>
-    
-    <source class="responsive-img-srcset" media="(max-width: 480px)" srcset="/assets/img/3-480.webp"></source>
-    <source class="responsive-img-srcset" media="(max-width: 800px)" srcset="/assets/img/3-800.webp"></source>
-    <source class="responsive-img-srcset" media="(max-width: 1400px)" srcset="/assets/img/3-1400.webp"></source>
-    
+<h2 id="demo">Demo</h2>
+<ul>
+  <li>
+<strong>Live demo / internal demo link:</strong> (add your URL)</li>
+  <li>
+<strong>Example gallery:</strong> (you will insert images/videos here)</li>
+</ul>
 
-    <!-- Fallback to the original file -->
-    <img src="/assets/img/3.jpg" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="example image" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+<h2 id="my-role">My Role</h2>
+<ul>
+  <li>Designed the overall pipeline and system integration strategy.</li>
+  <li>Developed prompt transformation and dataset construction protocol.</li>
+  <li>Built training/evaluation loop and performed error analysis on failure modes (filtering, translation, OOD prompts).</li>
+  <li>Coordinated iteration cycles with stakeholders for educational usability.</li>
+</ul>
 
-  </picture>
+<h2 id="tech-stack">Tech Stack</h2>
+<ul>
+  <li>Diffusion-based text-to-image generation</li>
+  <li>Neural machine translation for Korean→English</li>
+  <li>Human pose estimation</li>
+  <li>Animation/motion transfer pipeline</li>
+  <li>Deployment: (Gradio / web demo / internal serving)</li>
+</ul>
 
-</figure>
+<h2 id="future-work">Future Work</h2>
+<ul>
+  <li>Domain-adapted bilingual prompting (Korean-aware prompt templates)</li>
+  <li>Expanded training distribution for classroom-specific concepts and compositions</li>
+  <li>Robust safety-filter mitigation and fallback generation strategies</li>
+  <li>Quantitative evaluation protocol tailored to educational illustration quality</li>
+</ul>
 
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        <figure>
-
-  <picture>
-    
-    <source class="responsive-img-srcset" media="(max-width: 480px)" srcset="/assets/img/5-480.webp"></source>
-    <source class="responsive-img-srcset" media="(max-width: 800px)" srcset="/assets/img/5-800.webp"></source>
-    <source class="responsive-img-srcset" media="(max-width: 1400px)" srcset="/assets/img/5-1400.webp"></source>
-    
-
-    <!-- Fallback to the original file -->
-    <img src="/assets/img/5.jpg" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="example image" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
-
-  </picture>
-
-</figure>
-
-    </div>
-</div>
-<div class="caption">
-    Caption photos easily. On the left, a road goes through a tunnel. Middle, leaves artistically fall in a hipster photoshoot. Right, in another hipster photoshoot, a lumberjack grasps a handful of pine needles.
-</div>
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-        <figure>
-
-  <picture>
-    
-    <source class="responsive-img-srcset" media="(max-width: 480px)" srcset="/assets/img/5-480.webp"></source>
-    <source class="responsive-img-srcset" media="(max-width: 800px)" srcset="/assets/img/5-800.webp"></source>
-    <source class="responsive-img-srcset" media="(max-width: 1400px)" srcset="/assets/img/5-1400.webp"></source>
-    
-
-    <!-- Fallback to the original file -->
-    <img src="/assets/img/5.jpg" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="example image" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
-
-  </picture>
-
-</figure>
-
-    </div>
-</div>
-<div class="caption">
-    This image can also have a caption. It's like magic.
-</div>
-
-<p>You can also put regular text between your rows of images.
-Say you wanted to write a little bit about your project before you posted the rest of the images.
-You describe how you toiled, sweated, <em>bled</em> for your project, and then… you reveal its glory in the next row of images.</p>
-
-<div class="row justify-content-sm-center">
-    <div class="col-sm-8 mt-3 mt-md-0">
-        <figure>
-
-  <picture>
-    
-    <source class="responsive-img-srcset" media="(max-width: 480px)" srcset="/assets/img/6-480.webp"></source>
-    <source class="responsive-img-srcset" media="(max-width: 800px)" srcset="/assets/img/6-800.webp"></source>
-    <source class="responsive-img-srcset" media="(max-width: 1400px)" srcset="/assets/img/6-1400.webp"></source>
-    
-
-    <!-- Fallback to the original file -->
-    <img src="/assets/img/6.jpg" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="example image" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
-
-  </picture>
-
-</figure>
-
-    </div>
-    <div class="col-sm-4 mt-3 mt-md-0">
-        <figure>
-
-  <picture>
-    
-    <source class="responsive-img-srcset" media="(max-width: 480px)" srcset="/assets/img/11-480.webp"></source>
-    <source class="responsive-img-srcset" media="(max-width: 800px)" srcset="/assets/img/11-800.webp"></source>
-    <source class="responsive-img-srcset" media="(max-width: 1400px)" srcset="/assets/img/11-1400.webp"></source>
-    
-
-    <!-- Fallback to the original file -->
-    <img src="/assets/img/11.jpg" class="img-fluid rounded z-depth-1" width="auto" height="auto" title="example image" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
-
-  </picture>
-
-</figure>
-
-    </div>
-</div>
-<div class="caption">
-    You can also have artistically styled 2/3 + 1/3 images, like these.
-</div>
-
-<p>The code is simple.
-Just wrap your images with <code class="language-plaintext highlighter-rouge">&lt;div class="col-sm"&gt;</code> and place them inside <code class="language-plaintext highlighter-rouge">&lt;div class="row"&gt;</code> (read more about the <a href="https://getbootstrap.com/docs/4.4/layout/grid/" rel="external nofollow noopener" target="_blank">Bootstrap Grid</a> system).
-To make images responsive, add <code class="language-plaintext highlighter-rouge">img-fluid</code> class to each; for rounded corners and shadows use <code class="language-plaintext highlighter-rouge">rounded</code> and <code class="language-plaintext highlighter-rouge">z-depth-1</code> classes.
-Here’s the code for the last row of images above:</p>
-
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"row justify-content-sm-center"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-sm-8 mt-3 mt-md-0"</span><span class="nt">&gt;</span>
-        {% include figure.html path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    <span class="nt">&lt;/div&gt;</span>
-    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-sm-4 mt-3 mt-md-0"</span><span class="nt">&gt;</span>
-        {% include figure.html path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    <span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-</code></pre></div></div>
-
+<hr>
 
           </article>
 
@@ -280,7 +253,7 @@ Here’s the code for the last row of images above:</p>
     <!-- Footer -->    
     <footer class="fixed-bottom">
       <div class="container mt-0">
-        © Copyright 2025 Jun-Hee  Kim. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>.
+        © Copyright 2026 Jun-Hee  Kim. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>.
 
       </div>
     </footer>
