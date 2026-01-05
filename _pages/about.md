@@ -1,6 +1,6 @@
 ---
 layout: about
-title: about
+title: About
 permalink: /
 subtitle: Ph.D. candidate, Department of Artificial Intelligence, <a href='http://xai.korea.ac.kr/'>Korea University</a>.
 
