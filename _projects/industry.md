@@ -2,7 +2,7 @@
 layout: page
 title: Vision AI for Industrial Safety
 description: Real-time 3D human pose estimation and open-vocabulary object detection using vision–language learning (R&D project).
-importance: 4
+importance: 2
 category: work
 ---
 
