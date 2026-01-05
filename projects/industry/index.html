@@ -113,27 +113,24 @@
 
           <article>
             <h2 id="summary">Summary</h2>
-<p>This project develops two core vision AI capabilities for industrial environments:</p>
-
-<p>1) <strong>Real-time 3D Human Pose Estimation (3D HPE)</strong> from video to monitor worker posture and support safety-oriented alerts and explanations. :contentReference[oaicite:2]{index=2}<br>
-2) <strong>Open-Vocabulary / Open-Set Object Detection (OVOD)</strong> leveraging cross-modal vision–language learning to detect novel objects by adjusting text prompts rather than retraining the detector. :contentReference[oaicite:3]{index=3}</p>
-
-<p>The goal is to build adaptable, deployment-ready models that generalize across diverse sites, tasks, and changing object requirements.</p>
+<p>This project develops two core vision AI capabilities for industrial environments:
+1) <strong>Real-time 3D Human Pose Estimation (3D HPE)</strong> from video to monitor worker posture and support safety-oriented reasoning.
+2) <strong>Open-Vocabulary Object Detection (OVOD)</strong> using vision–language learning to detect novel objects through text prompts rather than retraining.</p>
 
 <h2 id="motivation">Motivation</h2>
-<p>Industrial sites are highly dynamic: worker posture risks vary by task, and the set of objects to detect changes frequently across environments. Traditional pipelines require costly data collection and retraining whenever conditions shift. This project focuses on (a) robust posture understanding in real time and (b) language-driven adaptability for object detection.</p>
+<p>Industrial sites are highly dynamic: worker posture risks vary by task, and the set of objects to detect changes frequently across environments. Traditional pipelines often require costly data collection and retraining whenever conditions shift. This project focuses on robust posture understanding in real time and language-driven adaptability for object detection.</p>
 
 <h2 id="objectives">Objectives</h2>
 <h3 id="1-3d-human-pose-estimation-video--3d-joints">1) 3D Human Pose Estimation (Video → 3D Joints)</h3>
 <ul>
-  <li>Predict 3D joint coordinates from real-time video streams to support posture monitoring and safety guidance. :contentReference[oaicite:4]{index=4}</li>
-  <li>Improve accuracy and robustness to be applicable across diverse industrial scenarios. :contentReference[oaicite:5]{index=5}</li>
+  <li>Predict 3D joint coordinates from real-time video streams to support posture monitoring.</li>
+  <li>Improve robustness to varied viewpoints, motion blur, occlusions, and diverse workwear/lighting conditions.</li>
 </ul>
 
-<h3 id="2-open-vocabulary--open-set-object-detection-vision--language">2) Open-Vocabulary / Open-Set Object Detection (Vision + Language)</h3>
+<h3 id="2-open-vocabulary-object-detection-vision--language">2) Open-Vocabulary Object Detection (Vision + Language)</h3>
 <ul>
-  <li>Extend closed-set object detection to open-set settings by integrating <strong>vision–language cross-modal information</strong>. :contentReference[oaicite:6]{index=6}</li>
-  <li>Enable rapid adaptation to new environments/objects by <strong>editing language inputs</strong> instead of replacing or retraining the base detector. :contentReference[oaicite:7]{index=7}</li>
+  <li>Extend closed-set object detection to open-vocabulary settings by integrating vision–language representations.</li>
+  <li>Enable rapid adaptation to new objects/environments by editing language inputs (text prompts) instead of retraining the detector.</li>
 </ul>
 
 <h2 id="method">Method</h2>
@@ -145,36 +142,36 @@
   <li>
 <strong>Modeling strategy</strong>
     <ul>
-      <li>Evaluate end-to-end 3D estimation and/or two-stage pipelines (2D keypoints → 3D lifting), selecting the most deployable approach for real-time constraints.</li>
-      <li>Add temporal stabilization and filtering strategies to reduce jitter and improve consistency in streaming settings.</li>
+      <li>Evaluate end-to-end 3D estimation and two-stage pipelines (2D keypoints → 3D lifting) and select an approach suitable for real-time constraints.</li>
+      <li>Add temporal stabilization to reduce jitter and improve consistency in streaming conditions.</li>
     </ul>
   </li>
   <li>
-<strong>System integration</strong>
+<strong>Integration</strong>
     <ul>
-      <li>Provide posture signals that can be used for downstream safety logic (e.g., risky bending, hazardous reach, unsafe handling posture), enabling alerts and explanatory feedback.</li>
+      <li>Provide posture signals that can be used by downstream safety logic (e.g., risky bending, hazardous reach, unsafe lifting posture), enabling alerts and explanatory feedback.</li>
     </ul>
   </li>
 </ul>
 
-<h3 id="workstream-b-open-vocabulary--open-set-object-detection-via-visionlanguage-learning">Workstream B: Open-Vocabulary / Open-Set Object Detection via Vision–Language Learning</h3>
+<h3 id="workstream-b-open-vocabulary-object-detection-via-visionlanguage-learning">Workstream B: Open-Vocabulary Object Detection via Vision–Language Learning</h3>
 <ul>
   <li>
 <strong>Core idea</strong>
     <ul>
-      <li>Fuse visual features with language embeddings to detect objects beyond a fixed set of trained categories. :contentReference[oaicite:8]{index=8}</li>
+      <li>Combine visual features with language embeddings to detect objects beyond a fixed set of trained categories.</li>
     </ul>
   </li>
   <li>
 <strong>Adaptation without retraining</strong>
     <ul>
-      <li>When the target set changes (new site / new objects), update detection behavior through <strong>text prompts or language inputs</strong> rather than retraining the detector. :contentReference[oaicite:9]{index=9}</li>
+      <li>When target objects change, update detection behavior through prompt engineering (text descriptions/class names) instead of retraining the model.</li>
     </ul>
   </li>
   <li>
 <strong>Deployment focus</strong>
     <ul>
-      <li>Maintain a strong closed-set baseline while enabling open-set expansion through language conditioning.</li>
+      <li>Maintain strong closed-set performance while enabling open-vocabulary expansion through language conditioning.</li>
     </ul>
   </li>
 </ul>
@@ -184,13 +181,13 @@
   <li>
 <strong>3D HPE</strong>
     <ul>
-      <li>Video data annotated or prepared to support 3D joint supervision and evaluation for posture-centric tasks. :contentReference[oaicite:10]{index=10}</li>
+      <li>Video data prepared to support 3D joint supervision and posture-centric evaluation.</li>
     </ul>
   </li>
   <li>
 <strong>OVOD</strong>
     <ul>
-      <li>Detection datasets supporting both closed-set performance and open-set evaluation, with text descriptions/class names used as language supervision. :contentReference[oaicite:11]{index=11}</li>
+      <li>Detection data supporting both closed-set performance and open-vocabulary evaluation, with text descriptions used as language supervision.</li>
     </ul>
   </li>
 </ul>
@@ -199,30 +196,31 @@
 
 <h2 id="deliverables">Deliverables</h2>
 <ul>
-  <li>A real-time 3D pose estimation module that outputs 3D joints from video for posture monitoring and safety applications. :contentReference[oaicite:12]{index=12}</li>
-  <li>An open-vocabulary object detection module that integrates vision–language signals and supports language-only adaptation to new objects/environments. :contentReference[oaicite:13]{index=13}</li>
-  <li>Dataset/annotation guidelines and a reproducible training–evaluation recipe for both workstreams (internal use).</li>
+  <li>A real-time 3D pose estimation module that outputs 3D joints from video for posture monitoring applications.</li>
+  <li>An open-vocabulary object detection module that supports language-only adaptation to new objects/environments.</li>
+  <li>Dataset/annotation guidelines and a reproducible training/evaluation recipe for internal use.</li>
 </ul>
 
 <h2 id="evaluation-confidential">Evaluation (Confidential)</h2>
-<p>Quantitative results and internal benchmarks are not publicly shareable due to confidentiality constraints.<br>
+<p>Quantitative results and internal benchmarks are not publicly shareable.
 Results can be shared upon request under an NDA.</p>
 
-<h2 id="my-role-edit-as-needed">My Role (edit as needed)</h2>
+<h2 id="my-role">My Role</h2>
 <ul>
-  <li>Contributed to end-to-end project planning and technical design across both workstreams (3D HPE and OVOD). :contentReference[oaicite:14]{index=14} :contentReference[oaicite:15]{index=15}</li>
+  <li>Contributed to technical design across both workstreams (3D HPE and OVOD).</li>
   <li>Supported dataset construction and annotation workflows, including labeling requirements and quality checks.</li>
-  <li>Collaborated with stakeholders to iterate on requirements and deployability constraints for real-world industrial environments.</li>
+  <li>Collaborated with stakeholders to iterate on requirements and deployment constraints for industrial environments.</li>
 </ul>
 
 <h2 id="tech-stack-high-level">Tech Stack (high-level)</h2>
 <ul>
-  <li>3D human pose estimation from video (real-time posture monitoring)</li>
+  <li>Real-time 3D human pose estimation from video</li>
   <li>Vision–language cross-modal learning for open-vocabulary detection</li>
   <li>Deployment-oriented model integration and data/annotation pipelines</li>
 </ul>
 
 <hr>
+
 
           </article>
 
