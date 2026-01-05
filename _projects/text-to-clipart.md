@@ -43,17 +43,29 @@ We constructed datasets for both image generation and animation:
   - Pose supervision collected from public pose datasets and synthetically generated samples.
   - Extended coverage to diverse occupations/actions frequently used in educational settings.
 
-## Results (Qualitative)
-
-### Example: Generated ClipArt → pose-driven animation
-{% include figure.html path="assets/img/text-to-clipart/penguin.gif" title="Generated ClipArt animated via pose-driven motion: a penguin wearing a cone-shaped hat, jumping." class="img-fluid rounded z-depth-1" %}
-<div class="caption">
-  Generated ClipArt result animated via a pose-driven pipeline: a penguin wearing a cone-shaped hat, jumping.
-</div>
-
+## Qualitative Animation Results
 The system produces:
 - ClipArt-style images aligned with Korean textual descriptions.
 - Pose-driven character animations suitable for short educational clips.
+
+Below are pose-driven animation examples generated from **ClipArt characters produced by our system**.
+
+<div class="row">
+  <div class="col-md-6 mt-3">
+    {% include figure.html path="assets/img/text-to-clipart/penguin.gif" title="Generated ClipArt → pose-driven animation: penguin wearing a cone-shaped hat, jumping." class="img-fluid rounded z-depth-1" %}
+    <div class="caption">
+      Penguin (generated ClipArt) → pose-driven animation (jumping).
+    </div>
+  </div>
+
+  <div class="col-md-6 mt-3">
+    {% include figure.html path="assets/img/text-to-clipart/boy.gif" title="Generated ClipArt → pose-driven animation: boy wearing a hat, dancing." class="img-fluid rounded z-depth-1" %}
+    <div class="caption">
+      Boy (generated ClipArt) → pose-driven animation (dancing).
+    </div>
+  </div>
+</div>
+
 
 ## My Role
 - Designed the overall pipeline and system integration strategy.
